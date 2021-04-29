@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Movify</string>
+
+    <!-- START PAGINAS -->
+    <string name="inicio">Inicio</string>
+    <string name="buscar">Buscar</string>
+    <string name="perfil">Perfil</string>
+    <string name="pelicula">Pelicula</string>
+    <!-- END PAGINAS -->
+
+    <!-- START COMPONENTES -->
+    <string name="componente_busqueda_label">Buscar Peliculas…</string>
+    <!-- END COMPONENTES -->
+
+    <!-- START ERRORES -->
+    <string name="error_infopelicula">No se encuentra la película</string>
+    <!-- END ERRORES -->
+</resources>
