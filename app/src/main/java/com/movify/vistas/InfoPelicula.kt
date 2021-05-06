@@ -1,7 +1,6 @@
 package com.movify.vistas
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -9,27 +8,25 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import com.movify.utils.getUrlBackdrop
-import com.movify.utils.getUrlCaratula
 import info.movito.themoviedbapi.model.MovieDb
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import com.google.accompanist.imageloading.ImageLoadState
 import com.google.accompanist.imageloading.isFinalState
-import com.movify.ui.theme.Verde200
+import com.movify.R
+import com.movify.utils.getUrlCaratula
 
 @Composable
 fun InfoPelicula(pelicula: MovieDb){
@@ -41,9 +38,6 @@ fun InfoPelicula(pelicula: MovieDb){
         DatosPelicula(pelicula)
         
     }
-
-    
-
 }
 
 @Composable
@@ -56,7 +50,11 @@ fun HeaderCaratula(pelicula: MovieDb){
 
     Box{
         Image(
-            painter = painter,
+            painter = if (pelicula.backdropPath.isNullOrBlank()) {
+                painterResource(id = R.drawable.backdrop_placeholder_blue)
+            } else {
+                painter
+            },
             contentDescription = pelicula.title,
             modifier = Modifier
                 .aspectRatio(1.7f)
@@ -131,7 +129,12 @@ fun DatosPelicula(pelicula: MovieDb){
         }
 
         Text(
-            text = pelicula.overview,
+            text = if (pelicula.overview.isNullOrBlank()) {
+                stringResource(id = R.string.description_not_found)
+            }
+            else {
+                pelicula.overview
+            },
             textAlign = TextAlign.Justify,
             style = MaterialTheme.typography.body2,
         )

@@ -8,10 +8,14 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
+import com.movify.R
 import com.movify.utils.getUrlCaratula
 import com.movify.utils.isScrolledToTheEnd
 import info.movito.themoviedbapi.model.MovieDb
@@ -39,10 +43,14 @@ fun Inicio(
         items(items = peliculas){pelicula->
 
             Image(
-                painter = rememberCoilPainter(
-                    request = getUrlCaratula(pelicula),
-                    fadeIn = true
-                ),
+                painter = if (pelicula.posterPath.isNullOrBlank()) {
+                    painterResource(id = R.drawable.poster_placeholder_blue)
+                } else {
+                    rememberCoilPainter(
+                        request = getUrlCaratula(pelicula),
+                        fadeIn = true
+                    )
+                },
                 contentDescription = pelicula.title,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
