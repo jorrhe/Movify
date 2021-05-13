@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import com.movify.repositorios.PeliculaRepositorio
 import com.movify.viewmodels.InfoPeliculaViewModel
 import com.movify.viewmodels.InicioPeliculaViewModel
+import com.movify.viewmodels.SearchViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -13,11 +14,12 @@ class MainActivity : ComponentActivity() {
 
     val inicioViewModel = InicioPeliculaViewModel(repositorio)
     val infoPeliculaViewModel = InfoPeliculaViewModel(repositorio)
+    val searchViewModel = SearchViewModel(repositorio)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MovifyApp(inicioViewModel,infoPeliculaViewModel)
+            MovifyApp(inicioViewModel,infoPeliculaViewModel, searchViewModel)
         }
 
     }

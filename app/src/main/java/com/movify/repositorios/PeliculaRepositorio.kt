@@ -15,6 +15,9 @@ class PeliculaRepositorio {
         return peliculas.results
     }
 
+    fun getSearch(query: String): List<MovieDb> {
+        val foundMovies = apiClient.search.searchMovie(query, 0, "es-ES", true, 0)
 
-
+        return foundMovies.results
+    }
 }

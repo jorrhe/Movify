@@ -15,4 +15,6 @@
     <!-- START ERRORES -->
     <string name="error_infopelicula">No se encuentra la película</string>
     <!-- END ERRORES -->
+
+    <string name="description_not_found">No existe una descripción para este título</string>
 </resources>

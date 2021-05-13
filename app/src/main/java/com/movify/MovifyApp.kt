@@ -15,11 +15,13 @@ import com.movify.viewmodels.InicioPeliculaViewModel
 import com.movify.vistas.*
 import androidx.navigation.compose.navigate
 import com.movify.componentes.MensajeError
+import com.movify.viewmodels.SearchViewModel
 
 @Composable
 fun MovifyApp(
     inicioPeliculaViewModel: InicioPeliculaViewModel,
-    infoPeliculaViewModel: InfoPeliculaViewModel
+    infoPeliculaViewModel: InfoPeliculaViewModel,
+    searchViewModel: SearchViewModel
 ){
 
     val navController = rememberNavController()
@@ -44,7 +46,7 @@ fun MovifyApp(
                         cargarSiguientePagina = {
                             inicioPeliculaViewModel.siguientePagina()
                         },
-                        cargarPelicula = {pelicula ->
+                        cargarPelicula = { pelicula ->
                             infoPeliculaViewModel.pelicula = pelicula
                             navController.navigate(Vista.InfoPelicula.ruta+"/"+pelicula.id)
                         }
@@ -52,7 +54,17 @@ fun MovifyApp(
                 }
 
                 composable(Vista.Buscar.ruta) {
-                    Buscar()
+                    Buscar(
+                        foundMovies = searchViewModel.foundMovies,
+                        searchMovies = { query ->
+                            searchViewModel.getMovies(query)
+                        },
+                        cleanSearch = { searchViewModel.cleanSearch() },
+                        loadMovie = { movie ->
+                            infoPeliculaViewModel.pelicula = movie
+                            navController.navigate(Vista.InfoPelicula.ruta+"/"+movie.id)
+                        }
+                    )
                 }
 
                 composable(Vista.Perfil.ruta) {
