@@ -55,7 +55,7 @@ fun Buscar(
             )
         }
 
-        Inicio(peliculas = foundMovies, cargarSiguientePagina = {}, cargarPelicula = loadMovie)
+        ListaPeliculas(peliculas = foundMovies, cargarSiguientePagina = {}, cargarPelicula = loadMovie)
     }
 }
 
