@@ -12,6 +12,6 @@ sealed class Vista(val ruta: String, @StringRes val idEtiqueta: Int,val icono: I
     object Buscar : Vista("buscar", R.string.buscar,Icons.Filled.Search)
     object Perfil : Vista("perfil", R.string.perfil,Icons.Filled.Person)
     object InfoPelicula : Vista("pelicula", R.string.pelicula,Icons.Filled.Info)
-    object Lista : Vista("lista", R.string.lista, Icons.Filled.List)
+    object ListaGuardada : Vista("lista", R.string.lista, Icons.Filled.List)
 
 }

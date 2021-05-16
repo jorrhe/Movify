@@ -8,7 +8,6 @@ import androidx.room.TypeConverters
 
 
 @Database(entities = [Movie::class, MovieList::class, ListCrossRef::class], version = 1)
-@TypeConverters(Converters::class)
 abstract class MovieRoomDatabase : RoomDatabase() {
 
     abstract fun movieDao(): MovieListDao?

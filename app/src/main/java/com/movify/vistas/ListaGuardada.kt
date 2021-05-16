@@ -21,7 +21,7 @@ import androidx.compose.runtime.setValue
 //TODO: Crear vista de una lista de pelis
 
 @Composable
-fun listaUsuario(listInfo:MovieList, list: List<MovieDb>, loadMovie:(MovieDb)->Unit){
+fun ListaGuardada(listInfo:MovieList, list: List<MovieDb>, loadMovie:(MovieDb)->Unit){
     Column{
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -35,14 +35,14 @@ fun listaUsuario(listInfo:MovieList, list: List<MovieDb>, loadMovie:(MovieDb)->U
             )
         }
 
-        ListaPeliculas(peliculas = list , cargarSiguientePagina = {}, cargarPelicula = loadMovie)
+        ListaPeliculas(peliculas = list, cargarPelicula = loadMovie)
     }
 }
 
 
 @Preview(showBackground = true)
 @Composable
-fun previewList(){
+fun PreviewListaGuardada(){
     MovifyTheme() {
        // listaUsuario(id = 1, listName = "Ver más tarde", list = listOf())
     }

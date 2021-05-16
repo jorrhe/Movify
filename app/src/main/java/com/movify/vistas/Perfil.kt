@@ -21,7 +21,11 @@ import com.movify.ui.theme.MovifyTheme
 import info.movito.themoviedbapi.model.MovieDb
 
 @Composable
-fun Perfil(listas:List<MovieList>, verLista: (MovieList) -> Unit, cargarPelicula: (MovieDb) -> Unit){
+fun Perfil(
+    listas:List<MovieList>,
+    verLista: (MovieList) -> Unit,
+    cargarPelicula: (MovieDb) -> Unit
+){
     Column{
         Text("Tus Listas", fontSize = 30.sp, modifier = Modifier.padding(12.dp))
         LazyColumn{

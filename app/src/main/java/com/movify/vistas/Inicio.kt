@@ -11,5 +11,9 @@ fun Inicio(
     cargarSiguientePagina:()->Unit,
     cargarPelicula:(MovieDb)->Unit
 ) {
-    ListaPeliculas(peliculas = peliculas, cargarSiguientePagina = cargarSiguientePagina, cargarPelicula = cargarPelicula)
+    ListaPeliculas(
+        peliculas = peliculas,
+        cargarSiguientePagina = cargarSiguientePagina,
+        cargarPelicula = cargarPelicula
+    )
 }

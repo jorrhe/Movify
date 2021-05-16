@@ -34,7 +34,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         getByName("debug") {
@@ -99,7 +99,7 @@ dependencies {
         exclude("commons-logging","commons-logging")
     }
 
-    implementation("com.google.accompanist:accompanist-coil:0.8.1")
+    implementation("com.google.accompanist:accompanist-coil:0.9.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.2")

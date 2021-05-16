@@ -10,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
@@ -26,7 +27,7 @@ fun Buscar(
     loadMovie: (MovieDb)->Unit
 ){
 
-    var valor: String by remember {mutableStateOf("")}
+    var valor: String by rememberSaveable{mutableStateOf("")}
 
     val view = LocalView.current
 

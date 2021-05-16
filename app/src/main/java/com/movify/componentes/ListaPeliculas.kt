@@ -22,7 +22,7 @@ import info.movito.themoviedbapi.model.MovieDb
 @Composable
 fun ListaPeliculas(
     peliculas:List<MovieDb>,
-    cargarSiguientePagina:()->Unit,
+    cargarSiguientePagina:()->Unit = {},
     cargarPelicula:(MovieDb)->Unit
 ){
 
@@ -40,27 +40,32 @@ fun ListaPeliculas(
 
         items(items = peliculas){pelicula->
 
-            Image(
-                painter = if (pelicula.posterPath.isNullOrBlank()) {
-                    painterResource(id = R.drawable.poster_placeholder_blue)
-                } else {
-                    rememberCoilPainter(
-                        request = getUrlCaratula(pelicula),
-                        fadeIn = true
-                    )
-                },
-                contentDescription = pelicula.title,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .height(200.dp)
-                    .clickable { cargarPelicula(pelicula) }
-            )
+            CaratulaPelicula(pelicula,cargarPelicula)
 
         }
 
     }
 
 
+}
+
+@Composable
+fun CaratulaPelicula(pelicula:MovieDb,cargarPelicula:(MovieDb)->Unit){
+    Image(
+        painter = if (pelicula.posterPath.isNullOrBlank()) {
+            painterResource(id = R.drawable.poster_placeholder_blue)
+        } else {
+            rememberCoilPainter(
+                request = getUrlCaratula(pelicula),
+                fadeIn = true
+            )
+        },
+        contentDescription = pelicula.title,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .height(200.dp)
+            .clickable { cargarPelicula(pelicula) }
+    )
 }
 
 @Composable

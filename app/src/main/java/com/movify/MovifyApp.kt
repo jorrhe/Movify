@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -12,9 +11,9 @@ import com.movify.componentes.BarraInferior
 import com.movify.ui.theme.MovifyTheme
 import com.movify.vistas.*
 import androidx.navigation.compose.navigate
-import com.movify.componentes.MensajeError
 import com.movify.database.MovieList
 import com.movify.viewmodels.*
+import info.movito.themoviedbapi.model.MovieDb
 
 @Composable
 fun MovifyApp(
@@ -25,6 +24,11 @@ fun MovifyApp(
     detailedListViewModel: DetailedListViewModel
 ){
     val navController = rememberNavController()
+
+    val cargarPelicula:(MovieDb)->Unit = { pelicula->
+        infoPeliculaViewModel.cambioPelicula(pelicula)
+        navController.navigate(Vista.InfoPelicula.ruta+"/"+pelicula.id)
+    }
 
     MovifyTheme {
 
@@ -47,10 +51,7 @@ fun MovifyApp(
                         cargarSiguientePagina = {
                             inicioPeliculaViewModel.siguientePagina()
                         },
-                        cargarPelicula = { pelicula ->
-                            infoPeliculaViewModel.pelicula = pelicula
-                            navController.navigate(Vista.InfoPelicula.ruta+"/"+pelicula.id)
-                        }
+                        cargarPelicula = cargarPelicula
                     )
 
                 }
@@ -62,46 +63,42 @@ fun MovifyApp(
                             searchViewModel.getMovies(query)
                         },
                         cleanSearch = { searchViewModel.cleanSearch() },
-                        loadMovie = { movie ->
-                            infoPeliculaViewModel.pelicula = movie
-                            navController.navigate(Vista.InfoPelicula.ruta+"/"+movie.id)
-                        }
+                        loadMovie = cargarPelicula
                     )
                 }
 
                 composable(Vista.Perfil.ruta) {
                     Perfil(
                         listas = movieListsViewModel.list?:listOf(),
-                        verLista = { listInfo:MovieList ->
-                            detailedListViewModel.listInfo = listInfo
+                        verLista = { listInfo: MovieList ->
                             detailedListViewModel.loadList(listInfo.movieListId.toInt())
-                            navController.navigate(Vista.Lista.ruta)
-                        }
-
-                    ) { peli ->
-                        infoPeliculaViewModel.pelicula = peli
-                        navController.navigate(Vista.InfoPelicula.ruta + "/" + peli.id)
-                    }
+                            navController.navigate(Vista.ListaGuardada.ruta+"/"+listInfo.movieListId.toInt())
+                        },
+                        cargarPelicula = cargarPelicula
+                    )
                 }
 
                 composable("${Vista.InfoPelicula.ruta}/{idPelicula}") {backStackEntry ->
 
-                    //val idPelicula = backStackEntry.arguments?.getString("idPelicula")
-                    infoPeliculaViewModel.pelicula?.let {pelicula->
+                    val idPelicula = backStackEntry.arguments?.getString("idPelicula")
 
-                        InfoPelicula(pelicula)
+                    idPelicula?.toInt()?.let { infoPeliculaViewModel.getPelicula(it) }
 
-                    }?: MensajeError(stringResource(R.string.error_infopelicula))
+                    InfoPelicula(
+                        pelicula = infoPeliculaViewModel.pelicula!!,
+                        peliculasRelacionadas = infoPeliculaViewModel.peliculasRelacionadas,
+                        imagenesServicios = infoPeliculaViewModel.imagenesServicios,
+                        cargarPelicula = cargarPelicula
+                    )
 
                 }
 
-                composable("${Vista.Lista.ruta}") {
-                    listaUsuario(
+                composable("${Vista.ListaGuardada.ruta}/{idLista}") {backStackEntry ->
+
+                    ListaGuardada(
                         listInfo = detailedListViewModel.listInfo,
                         list = detailedListViewModel.actualList,
-                        loadMovie ={movie ->
-                             infoPeliculaViewModel.pelicula = movie
-                             navController.navigate(Vista.InfoPelicula.ruta+"/"+movie.id)} ,
+                        loadMovie =cargarPelicula
                     )
                 }
 
@@ -112,3 +109,4 @@ fun MovifyApp(
     }
 
 }
+

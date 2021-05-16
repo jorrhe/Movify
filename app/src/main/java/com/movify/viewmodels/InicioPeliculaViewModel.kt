@@ -4,13 +4,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.movify.repositorios.PeliculaRepositorio
 import info.movito.themoviedbapi.model.MovieDb
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class InicioPeliculaViewModel(val repositorio: PeliculaRepositorio) : ViewModel() {
+class InicioPeliculaViewModel(private val repositorio: PeliculaRepositorio) : ViewModel() {
 
     var peliculas:List<MovieDb> by mutableStateOf(listOf())
         private set
@@ -38,4 +39,10 @@ class InicioPeliculaViewModel(val repositorio: PeliculaRepositorio) : ViewModel(
         }
     }
 
+}
+
+class InicioPeliculaViewModelFactory(private val repositorio: PeliculaRepositorio): ViewModelProvider.Factory{
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return InicioPeliculaViewModel(repositorio) as T
+    }
 }
