@@ -20,4 +20,9 @@ class PeliculaRepositorio {
 
         return foundMovies.results
     }
+
+    fun getMovieById(id:Int):MovieDb{
+        val foundMovie = apiClient.movies.getMovie(id, "es-ES")
+        return foundMovie
+    }
 }

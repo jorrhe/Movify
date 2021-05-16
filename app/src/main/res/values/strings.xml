@@ -17,4 +17,5 @@
     <!-- END ERRORES -->
 
     <string name="description_not_found">No existe una descripción para este título</string>
+    <string name="lista">Lista</string>
 </resources>

@@ -47,7 +47,6 @@ fun HeaderCaratula(pelicula: MovieDb){
         request = getUrlBackdrop(pelicula),
         fadeIn = true
     )
-
     Box{
         Image(
             painter = if (pelicula.backdropPath.isNullOrBlank()) {
@@ -99,27 +98,26 @@ fun DatosPelicula(pelicula: MovieDb){
     Column(
         Modifier.padding(16.dp,0.dp)
     ){
-
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
             modifier = Modifier.fillMaxWidth()
         ){
 
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { /*TODO: Añadir metodo del viewmodel de peliculas que añada la peli a tu lista de favoritos*/ }) {
                 Icon(
                     Icons.Filled.Favorite,
                     contentDescription = ""
                 )
             }
 
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { /*TODO: Cambiar icono por el del reloj y añadir metodo del viewmodel que añada la peli a tu lista de ver más tarde*/ }) {
                 Icon(
                     Icons.Filled.Star,
                     contentDescription = ""
                 )
             }
 
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { /*TODO: Tercer icono para puntuar la película?*/ }) {
                 Icon(
                     Icons.Filled.List,
                     contentDescription = ""
