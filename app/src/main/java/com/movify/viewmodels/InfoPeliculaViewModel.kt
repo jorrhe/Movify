@@ -49,7 +49,9 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
 
             peliculaDatosNuevos?.let {
 
-                pelicula = peliculaDatosNuevos
+                pelicula.genres = peliculaDatosNuevos.genres
+
+                //pelicula = peliculaDatosNuevos
 
                 peliculasRelacionadas = peliculaDatosNuevos.similarMovies
 
@@ -73,8 +75,6 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
     }
 
     fun accionDeLista(idLista:Long, pelicula: MovieDb) {
-
-        println("Pelicula ${pelicula.id} en lista $idLista: ${agregadaALista[idLista]}")
 
         if(agregadaALista[idLista] == true){
             viewModelScope.launch(Dispatchers.IO) {

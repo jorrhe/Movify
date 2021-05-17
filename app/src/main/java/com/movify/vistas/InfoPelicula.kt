@@ -61,9 +61,9 @@ fun InfoPelicula(
             pelicula = pelicula
         )
 
-        if(pelicula.isAdult){
-            Text(text = "PARA ADULTOS")
-        }
+        /*if(pelicula.genres!=null)
+            Text(text = pelicula.genres.toString())*/
+
 
         DatosPelicula(
             pelicula = pelicula,

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <color android:color="#343e93"/>
+    </item>
+
+    <item android:gravity="center"
+        android:width="300dp"
+        android:height="211dp">
+        <bitmap android:src="@drawable/movify_title_1"/>
+    </item>
+
+</layer-list>

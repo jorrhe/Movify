@@ -37,7 +37,7 @@ fun ListaGuardada(infoLista:InfoLista, listaPeliculas: List<Pelicula>, cargarPel
 }
 
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun PreviewListaGuardada(){
     MovifyTheme() {

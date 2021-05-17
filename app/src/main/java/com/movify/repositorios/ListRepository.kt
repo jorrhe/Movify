@@ -24,12 +24,11 @@ class ListRepository(application: Application) {
     suspend fun insertarEnLista(id:Long, peliculaApi: MovieDb){
         val pelicula = movieDbAPelicula(peliculaApi)
         movieListDao?.insertAll(pelicula)
-        println("INSERTADA PELICULA")
         movieListDao?.addMovieToList(PeliRefLista(id, pelicula.idPelicula))
     }
 
     suspend fun borrarDeLista(id:Long, pelicula: MovieDb){
-        //movieListDao?.removeMovieFromList(PeliRefLista(id, pelicula.idPelicula.toLong()))
+        movieListDao?.removeMovieFromList(PeliRefLista(id, pelicula.id))
     }
 
 }
