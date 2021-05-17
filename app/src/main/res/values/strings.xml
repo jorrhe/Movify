@@ -14,6 +14,8 @@
 
     <!-- START ERRORES -->
     <string name="error_infopelicula">No se encuentra la película</string>
+    <string name="error_sin_conexion_internet">No nos podemos conectar a internet!\n\npor favor verifica tu conexión</string>
+    <string name="reload">Volver a cargar</string>
     <!-- END ERRORES -->
 
     <string name="description_not_found">No existe una descripción para este título</string>
