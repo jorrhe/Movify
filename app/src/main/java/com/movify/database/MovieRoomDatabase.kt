@@ -23,7 +23,6 @@ abstract class MovieRoomDatabase : RoomDatabase() {
                         ) // Wipes and rebuilds instead of migrating
                             // if no Migration object.
                             .createFromAsset("myapp.db")
-                            .fallbackToDestructiveMigration()
                             .build()
                     }
                 }
