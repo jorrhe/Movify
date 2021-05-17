@@ -11,7 +11,7 @@ import com.movify.componentes.BarraInferior
 import com.movify.ui.theme.MovifyTheme
 import com.movify.vistas.*
 import androidx.navigation.compose.navigate
-import com.movify.database.MovieList
+import com.movify.database.InfoLista
 import com.movify.viewmodels.*
 import info.movito.themoviedbapi.model.MovieDb
 
@@ -70,9 +70,9 @@ fun MovifyApp(
                 composable(Vista.Perfil.ruta) {
                     Perfil(
                         listas = movieListsViewModel.list?:listOf(),
-                        verLista = { listInfo: MovieList ->
-                            detailedListViewModel.loadList(listInfo.movieListId.toInt())
-                            navController.navigate(Vista.ListaGuardada.ruta+"/"+listInfo.movieListId.toInt())
+                        verLista = { listInfo: InfoLista ->
+                            detailedListViewModel.loadList(listInfo.idInfoLista.toInt())
+                            navController.navigate(Vista.ListaGuardada.ruta+"/"+listInfo.idInfoLista.toInt())
                         },
                         cargarPelicula = cargarPelicula
                     )
@@ -96,9 +96,9 @@ fun MovifyApp(
                 composable("${Vista.ListaGuardada.ruta}/{idLista}") {backStackEntry ->
 
                     ListaGuardada(
-                        listInfo = detailedListViewModel.listInfo,
-                        list = detailedListViewModel.actualList,
-                        loadMovie =cargarPelicula
+                        infoLista = detailedListViewModel.infoLista,
+                        listaPeliculas = detailedListViewModel.listaPeliculas,
+                        cargarPelicula = cargarPelicula
                     )
                 }
 

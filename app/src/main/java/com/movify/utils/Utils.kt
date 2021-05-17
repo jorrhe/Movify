@@ -1,8 +1,10 @@
 package com.movify.utils
 
 import androidx.compose.foundation.lazy.LazyListState
+import com.movify.database.Pelicula
 import info.movito.themoviedbapi.model.MovieDb
 import org.json.JSONObject
+
 
 fun getUrlCaratula(pelicula:MovieDb,ancho:String = "w300"):String{
     return "https://image.tmdb.org/t/p/$ancho/${pelicula.posterPath}"
@@ -48,6 +50,11 @@ fun procesarServicios(respuesta:String):List<String>{
     return emptyList()
 }
 
+fun convertirListaAMovieDb(listaPeliculas: List<Pelicula>): List<MovieDb> {
+    var movieDb : MovieDb = MovieDb()
+    var listaDeMovieDb= listaPeliculas.map { it.AMovieDb() }
+    return listaDeMovieDb
+}
 // Funciones de extension
 
 fun LazyListState.isScrolledToTheEnd() = layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount - 1

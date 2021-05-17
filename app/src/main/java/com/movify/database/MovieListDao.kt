@@ -1,36 +1,34 @@
 package com.movify.database
 
 
-import androidx.compose.runtime.MutableState
 import androidx.room.*
 
 @Dao
 interface MovieListDao {
 
-    @Query("SELECT * FROM MovieList")
-    suspend fun getAllLists(): List<MovieList>
+    @Query("SELECT * FROM InfoLista")
+    suspend fun getAllLists(): List<InfoLista>
 
     @Transaction
-    @Query("SELECT * FROM MovieList WHERE movieListId = :listId")
-    suspend fun getListById(listId: Int): ListWithMovies
+    @Query("SELECT * FROM InfoLista WHERE idInfoLista = :listId")
+    suspend fun getListById(listId: Int): InfoListaConPelis
     
     @Delete
-    suspend fun removeMovieFromList(listCrossRef: ListCrossRef)
+    suspend fun removeMovieFromList(peliRefLista: PeliRefLista)
 
-    @Insert
-    suspend fun addMovieToList(listCrossRef: ListCrossRef)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun addMovieToList(peliRefLista: PeliRefLista)
 
-    @Insert
-    suspend fun insertAll(vararg movies: Movie)
-
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(vararg peliculas: Pelicula)
 
     //NO SE SI TIENEN USO:
 
-    @Query("SELECT * FROM movie")
-    fun getAllMovies(): List<Movie>
+    @Query("SELECT * FROM Pelicula")
+    fun getAllMovies(): List<Pelicula>
 
-    @Query("SELECT * FROM movie WHERE movieId IN (:movieIds)")
-    fun loadAllByIds(movieIds: IntArray): List<Movie>
+    @Query("SELECT * FROM Pelicula WHERE idPelicula IN (:movieIds)")
+    fun loadAllByIds(movieIds: IntArray): List<Pelicula>
 
     //@Query("SELECT * FROM movie WHERE title LIKE :text")
     //fun findByTitle(text:String): Movie
@@ -38,5 +36,5 @@ interface MovieListDao {
 
 
     @Delete
-    fun delete(movie: Movie)
+    fun delete(pelicula: Pelicula)
 }

@@ -7,27 +7,26 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.movify.database.MovieList
+import com.movify.database.InfoLista
+import com.movify.database.Pelicula
 import com.movify.ui.theme.MovifyTheme
+import com.movify.utils.convertirListaAMovieDb
+
 import info.movito.themoviedbapi.model.MovieDb
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-//TODO: Crear vista de una lista de pelis
 
 @Composable
-fun ListaGuardada(listInfo:MovieList, list: List<MovieDb>, loadMovie:(MovieDb)->Unit){
+fun ListaGuardada(infoLista:InfoLista, listaPeliculas: List<Pelicula>, cargarPelicula:(MovieDb)->Unit){
     Column{
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ){
-            Text(listInfo.listName, fontSize = 30.sp, modifier = Modifier.padding(12.dp))
+            Text(infoLista.nombre, fontSize = 30.sp, modifier = Modifier.padding(12.dp))
             Icon(
                 imageVector = Icons.Default.Star,
                 contentDescription = null,
@@ -35,7 +34,7 @@ fun ListaGuardada(listInfo:MovieList, list: List<MovieDb>, loadMovie:(MovieDb)->
             )
         }
 
-        ListaPeliculas(peliculas = list, cargarPelicula = loadMovie)
+        ListaPeliculas(peliculas = convertirListaAMovieDb(listaPeliculas), cargarPelicula = cargarPelicula)
     }
 }
 

@@ -2,42 +2,43 @@ package com.movify.viewmodels
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.movify.database.ListWithMovies
-import com.movify.database.Movie
-import com.movify.database.MovieList
+import com.movify.database.InfoLista
+import com.movify.database.Pelicula
 import com.movify.repositorios.ListRepository
 import com.movify.repositorios.PeliculaRepositorio
-import info.movito.themoviedbapi.model.MovieDb
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class DetailedListViewModel(var repositorioListas: ListRepository, var repositorioPeliculas: PeliculaRepositorio): ViewModel() {
-    var listInfo : MovieList by mutableStateOf(MovieList(-1,""))
-    var actualList : List<MovieDb> by mutableStateOf(emptyList())
+    var infoLista: InfoLista by mutableStateOf(InfoLista(-1,"", ""))
+    var listaPeliculas : List<Pelicula> by mutableStateOf(emptyList())
         private set
 
     fun loadList(id:Int){
         viewModelScope.launch(Dispatchers.IO){
 
-            val listWithMovies = repositorioListas.getListById(id)
+            val infoListaConPelis = repositorioListas.getListById(id)
 
-            if (listWithMovies != null) {
-
-                listInfo = listWithMovies.movieList
-
-                actualList = emptyList()
-
-                for(movie in listWithMovies.movies){
-                    val dbMovie = repositorioPeliculas.getMovieById(movie.imdbId)
-                    actualList = actualList + listOf(dbMovie)
-                }
-
+            if (infoListaConPelis != null) {
+                infoLista = infoListaConPelis.infoLista
+                listaPeliculas = infoListaConPelis.listaPeliculas
             }
+        }
+    }
+
+    fun agregarALista(idLista:Int, pelicula: Pelicula) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repositorioListas.InsertarEnLista(idLista, pelicula)
+        }
+    }
+
+    fun eliminarDeLista(idLista:Int, pelicula: Pelicula) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repositorioListas.BorrarDeLista(idLista, pelicula)
         }
     }
 

@@ -2,54 +2,40 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e46ce42238d2c7342caf00c906386516",
+    "identityHash": "ff69efe844aaecce535fca0946856eb0",
     "entities": [
       {
-        "tableName": "Movie",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`movieId` INTEGER NOT NULL, `imdbId` INTEGER NOT NULL, PRIMARY KEY(`movieId`))",
+        "tableName": "Pelicula",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idPelicula` INTEGER NOT NULL, `idApi` INTEGER NOT NULL, `nombre` TEXT NOT NULL, `caratula` TEXT NOT NULL, PRIMARY KEY(`idPelicula`))",
         "fields": [
           {
-            "fieldPath": "movieId",
-            "columnName": "movieId",
+            "fieldPath": "idPelicula",
+            "columnName": "idPelicula",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "imdbId",
-            "columnName": "imdbId",
-            "affinity": "INTEGER",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "movieId"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "MovieList",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`movieListId` INTEGER NOT NULL, `listName` TEXT NOT NULL, PRIMARY KEY(`movieListId`))",
-        "fields": [
-          {
-            "fieldPath": "movieListId",
-            "columnName": "movieListId",
+            "fieldPath": "idApi",
+            "columnName": "idApi",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "listName",
-            "columnName": "listName",
+            "fieldPath": "nombre",
+            "columnName": "nombre",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "caratula",
+            "columnName": "caratula",
             "affinity": "TEXT",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "movieListId"
+            "idPelicula"
           ],
           "autoGenerate": false
         },
@@ -57,26 +43,58 @@
         "foreignKeys": []
       },
       {
-        "tableName": "ListCrossRef",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`movieListId` INTEGER NOT NULL, `movieId` INTEGER NOT NULL, PRIMARY KEY(`movieListId`, `movieId`))",
+        "tableName": "InfoLista",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idInfoLista` INTEGER NOT NULL, `nombre` TEXT NOT NULL, `icono` TEXT NOT NULL, PRIMARY KEY(`idInfoLista`))",
         "fields": [
           {
-            "fieldPath": "movieListId",
-            "columnName": "movieListId",
+            "fieldPath": "idInfoLista",
+            "columnName": "idInfoLista",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "movieId",
-            "columnName": "movieId",
+            "fieldPath": "nombre",
+            "columnName": "nombre",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "icono",
+            "columnName": "icono",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idInfoLista"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "PeliRefLista",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idInfoLista` INTEGER NOT NULL, `idPelicula` INTEGER NOT NULL, PRIMARY KEY(`idInfoLista`, `idPelicula`))",
+        "fields": [
+          {
+            "fieldPath": "idInfoLista",
+            "columnName": "idInfoLista",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idPelicula",
+            "columnName": "idPelicula",
             "affinity": "INTEGER",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "movieListId",
-            "movieId"
+            "idInfoLista",
+            "idPelicula"
           ],
           "autoGenerate": false
         },
@@ -87,7 +105,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e46ce42238d2c7342caf00c906386516')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ff69efe844aaecce535fca0946856eb0')"
     ]
   }
 }

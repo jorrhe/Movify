@@ -15,22 +15,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.movify.R
-import com.movify.database.MovieList
+import com.movify.database.InfoLista
 import com.movify.ui.theme.MovifyTheme
 import info.movito.themoviedbapi.model.MovieDb
 
 @Composable
 fun Perfil(
-    listas:List<MovieList>,
-    verLista: (MovieList) -> Unit,
+    listas:List<InfoLista>,
+    verLista: (InfoLista) -> Unit,
     cargarPelicula: (MovieDb) -> Unit
 ){
     Column{
         Text("Tus Listas", fontSize = 30.sp, modifier = Modifier.padding(12.dp))
         LazyColumn{
             items(listas){ lista ->
-                CardLista(modifier = Modifier, texto = lista.listName, onClick = { verLista(lista) }) {
+                CardLista(modifier = Modifier, texto = lista.nombre, onClick = { verLista(lista) }) {
                     Icon(
                         imageVector = Icons.Default.Star,
                         contentDescription = null
