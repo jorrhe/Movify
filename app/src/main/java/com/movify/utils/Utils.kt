@@ -1,6 +1,7 @@
 package com.movify.utils
 
 import androidx.compose.foundation.lazy.LazyListState
+import com.movify.R
 import com.movify.database.Pelicula
 import info.movito.themoviedbapi.model.MovieDb
 import org.json.JSONObject
@@ -35,7 +36,7 @@ fun procesarServicios(respuesta:String):List<String>{
                     val servicio = servicios.getJSONObject(i)
 
                     if(servicio.has("logo_path")){
-                        imagenes.add("https://image.tmdb.org/t/p/original${servicio.get("logo_path")}")
+                        imagenes.add("https://image.tmdb.org/t/p/original${servicio.getString("logo_path")}")
                     }
                 }
 
@@ -51,10 +52,16 @@ fun procesarServicios(respuesta:String):List<String>{
 }
 
 fun convertirListaAMovieDb(listaPeliculas: List<Pelicula>): List<MovieDb> {
-    var movieDb : MovieDb = MovieDb()
-    var listaDeMovieDb= listaPeliculas.map { it.AMovieDb() }
-    return listaDeMovieDb
+    return listaPeliculas.map { it.AMovieDb() }
 }
+
+fun getIconoLista(id:Long): Int =
+    when(id){
+        1L -> R.drawable.ic_favoritos
+        2L -> R.drawable.ic_vistas
+        else -> R.drawable.ic_ver_mas_tarde
+    }
+
 // Funciones de extension
 
 fun LazyListState.isScrolledToTheEnd() = layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount - 1

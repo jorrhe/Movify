@@ -2,21 +2,15 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ff69efe844aaecce535fca0946856eb0",
+    "identityHash": "5f219ce385075e060497228c6f534867",
     "entities": [
       {
         "tableName": "Pelicula",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idPelicula` INTEGER NOT NULL, `idApi` INTEGER NOT NULL, `nombre` TEXT NOT NULL, `caratula` TEXT NOT NULL, PRIMARY KEY(`idPelicula`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idPelicula` INTEGER NOT NULL, `nombre` TEXT NOT NULL, `caratula` TEXT NOT NULL, PRIMARY KEY(`idPelicula`))",
         "fields": [
           {
             "fieldPath": "idPelicula",
             "columnName": "idPelicula",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "idApi",
-            "columnName": "idApi",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -105,7 +99,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ff69efe844aaecce535fca0946856eb0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5f219ce385075e060497228c6f534867')"
     ]
   }
 }

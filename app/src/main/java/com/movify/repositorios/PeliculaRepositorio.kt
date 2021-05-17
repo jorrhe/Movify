@@ -7,8 +7,6 @@ import info.movito.themoviedbapi.TmdbMovies
 import info.movito.themoviedbapi.model.MovieDb
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.json.JSONObject
-import java.lang.Exception
 
 class PeliculaRepositorio {
 
@@ -21,7 +19,7 @@ class PeliculaRepositorio {
         return peliculas.results
     }
 
-    fun getPelicula(id:Int):MovieDb{
+    fun getPelicula(id:Int):MovieDb?{
         val pelicula = apiClient.movies.getMovie(
             id,
             "es-ES",

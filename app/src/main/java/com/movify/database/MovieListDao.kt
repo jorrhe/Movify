@@ -22,17 +22,8 @@ interface MovieListDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(vararg peliculas: Pelicula)
 
-    //NO SE SI TIENEN USO:
-
-    @Query("SELECT * FROM Pelicula")
-    fun getAllMovies(): List<Pelicula>
-
-    @Query("SELECT * FROM Pelicula WHERE idPelicula IN (:movieIds)")
-    fun loadAllByIds(movieIds: IntArray): List<Pelicula>
-
-    //@Query("SELECT * FROM movie WHERE title LIKE :text")
-    //fun findByTitle(text:String): Movie
-
+    @Query("SELECT EXISTS(SELECT * FROM pelireflista WHERE idInfoLista = :idInfoLista AND idPelicula = :idPelicula )")
+    fun estaPeliculaEnLista(idInfoLista : Long, idPelicula:Int) : Boolean
 
 
     @Delete

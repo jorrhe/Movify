@@ -10,6 +10,8 @@
 
     <!-- START COMPONENTES -->
     <string name="componente_busqueda_label">Buscar Peliculas…</string>
+    <string name="componente_streaming_label">Disponible en Streaming</string>
+    <string name="componente_relacionadas_label">Peliculas Relacionadas</string>
     <!-- END COMPONENTES -->
 
     <!-- START ERRORES -->

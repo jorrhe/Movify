@@ -5,5 +5,5 @@ import androidx.room.Entity
 @Entity(primaryKeys = ["idInfoLista", "idPelicula"])
 data class PeliRefLista(
     val idInfoLista: Long,
-    val idPelicula: Long
+    val idPelicula: Int
 )

@@ -6,13 +6,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.movify.componentes.BarraInferior
-import com.movify.ui.theme.MovifyTheme
-import com.movify.vistas.*
-import androidx.navigation.compose.navigate
 import com.movify.database.InfoLista
+import com.movify.ui.theme.MovifyTheme
 import com.movify.viewmodels.*
+import com.movify.vistas.*
 import info.movito.themoviedbapi.model.MovieDb
 
 @Composable
@@ -20,8 +20,8 @@ fun MovifyApp(
     inicioPeliculaViewModel: InicioPeliculaViewModel,
     infoPeliculaViewModel: InfoPeliculaViewModel,
     searchViewModel: SearchViewModel,
-    movieListsViewModel: MovieListsViewModel,
-    detailedListViewModel: DetailedListViewModel
+    movieListsViewModel: ListaGuardadaViewModel,
+    listaGuardadaViewModel: ListaGuardadaViewModel
 ){
     val navController = rememberNavController()
 
@@ -69,12 +69,11 @@ fun MovifyApp(
 
                 composable(Vista.Perfil.ruta) {
                     Perfil(
-                        listas = movieListsViewModel.list?:listOf(),
+                        listas = movieListsViewModel.listasGuardadas,
                         verLista = { listInfo: InfoLista ->
-                            detailedListViewModel.loadList(listInfo.idInfoLista.toInt())
+                            listaGuardadaViewModel.loadList(listInfo.idInfoLista.toInt())
                             navController.navigate(Vista.ListaGuardada.ruta+"/"+listInfo.idInfoLista.toInt())
-                        },
-                        cargarPelicula = cargarPelicula
+                        }
                     )
                 }
 
@@ -85,9 +84,17 @@ fun MovifyApp(
                     idPelicula?.toInt()?.let { infoPeliculaViewModel.getPelicula(it) }
 
                     InfoPelicula(
-                        pelicula = infoPeliculaViewModel.pelicula!!,
-                        peliculasRelacionadas = infoPeliculaViewModel.peliculasRelacionadas,
+                        pelicula = infoPeliculaViewModel.pelicula,
+
+                        listasGuardadas = infoPeliculaViewModel.listasGuardadas,
+                        accionBotonLista = { id, pelicula->
+                            infoPeliculaViewModel.accionDeLista(id,pelicula);
+                        },
+                        agregadaALista = infoPeliculaViewModel.agregadaALista,
+
                         imagenesServicios = infoPeliculaViewModel.imagenesServicios,
+
+                        peliculasRelacionadas = infoPeliculaViewModel.peliculasRelacionadas,
                         cargarPelicula = cargarPelicula
                     )
 
@@ -96,8 +103,8 @@ fun MovifyApp(
                 composable("${Vista.ListaGuardada.ruta}/{idLista}") {backStackEntry ->
 
                     ListaGuardada(
-                        infoLista = detailedListViewModel.infoLista,
-                        listaPeliculas = detailedListViewModel.listaPeliculas,
+                        infoLista = listaGuardadaViewModel.infoLista,
+                        listaPeliculas = listaGuardadaViewModel.listaPeliculas,
                         cargarPelicula = cargarPelicula
                     )
                 }

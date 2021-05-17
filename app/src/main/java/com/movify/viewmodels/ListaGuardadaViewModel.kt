@@ -9,14 +9,25 @@ import androidx.lifecycle.viewModelScope
 import com.movify.database.InfoLista
 import com.movify.database.Pelicula
 import com.movify.repositorios.ListRepository
-import com.movify.repositorios.PeliculaRepositorio
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DetailedListViewModel(var repositorioListas: ListRepository, var repositorioPeliculas: PeliculaRepositorio): ViewModel() {
+class ListaGuardadaViewModel(var repositorioListas: ListRepository): ViewModel() {
+
     var infoLista: InfoLista by mutableStateOf(InfoLista(-1,"", ""))
+
     var listaPeliculas : List<Pelicula> by mutableStateOf(emptyList())
         private set
+
+    var listasGuardadas: List<InfoLista> by mutableStateOf(listOf())
+        private set
+
+    init{
+        viewModelScope.launch(Dispatchers.IO) {
+            val resultado = repositorioListas.getAlLists()?:listOf()
+            listasGuardadas = resultado
+        }
+    }
 
     fun loadList(id:Int){
         viewModelScope.launch(Dispatchers.IO){
@@ -30,22 +41,10 @@ class DetailedListViewModel(var repositorioListas: ListRepository, var repositor
         }
     }
 
-    fun agregarALista(idLista:Int, pelicula: Pelicula) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repositorioListas.InsertarEnLista(idLista, pelicula)
-        }
-    }
-
-    fun eliminarDeLista(idLista:Int, pelicula: Pelicula) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repositorioListas.BorrarDeLista(idLista, pelicula)
-        }
-    }
-
 }
 
-class DetailedListViewModelFactory(var repositorioListas: ListRepository, var repositorioPeliculas: PeliculaRepositorio): ViewModelProvider.Factory{
+class ListaGuardadaViewModelFactory(var repositorioListas: ListRepository): ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return DetailedListViewModel(repositorioListas,repositorioPeliculas) as T
+        return ListaGuardadaViewModel(repositorioListas) as T
     }
 }

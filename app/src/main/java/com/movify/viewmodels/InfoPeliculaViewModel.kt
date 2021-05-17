@@ -6,14 +6,16 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.movify.database.InfoLista
+import com.movify.repositorios.ListRepository
 import com.movify.repositorios.PeliculaRepositorio
 import info.movito.themoviedbapi.model.MovieDb
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class InfoPeliculaViewModel(val repositorio: PeliculaRepositorio) : ViewModel() {
+class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositorioPeliculas: PeliculaRepositorio) : ViewModel() {
 
-    var pelicula:MovieDb? by mutableStateOf(null)
+    var pelicula:MovieDb by mutableStateOf(MovieDb())
 
     var peliculasRelacionadas:List<MovieDb> by mutableStateOf(emptyList())
         private set
@@ -21,20 +23,40 @@ class InfoPeliculaViewModel(val repositorio: PeliculaRepositorio) : ViewModel() 
     var imagenesServicios:List<String> by mutableStateOf(emptyList())
         private set
 
-    //todo https://developers.themoviedb.org/3/movies/get-movie-watch-providers
-    //todo Pasarle el repo de listas y añadir funcion para añadir y quitar de las listas desde aquí
+    var listasGuardadas: List<InfoLista> by mutableStateOf(listOf())
+        private set
+
+    var agregadaALista: HashMap<Long,Boolean> by mutableStateOf(HashMap())
+        private set
+
+    init{
+        viewModelScope.launch(Dispatchers.IO) {
+            val resultado = repositorioListas.getAlLists()?:listOf()
+            listasGuardadas = resultado
+        }
+    }
 
     fun getPelicula(id:Int){
 
         viewModelScope.launch(Dispatchers.IO) {
 
-            val peliculaDatosNuevos = repositorio.getPelicula(id)
+            listasGuardadas.forEach {lista->
+                val idLista = lista.idInfoLista
+                agregadaALista[idLista] = repositorioListas.estaPeliculaEnLista(idLista,pelicula.id)
+            }
 
-            pelicula = peliculaDatosNuevos
+            val peliculaDatosNuevos = repositorioPeliculas.getPelicula(id)
 
-            peliculasRelacionadas = peliculaDatosNuevos.similarMovies
+            peliculaDatosNuevos?.let {
 
-            imagenesServicios = repositorio.getServicios(id)
+                pelicula = peliculaDatosNuevos
+
+                peliculasRelacionadas = peliculaDatosNuevos.similarMovies
+
+                imagenesServicios = repositorioPeliculas.getServicios(id)
+
+
+            }
 
         }
     }
@@ -43,12 +65,35 @@ class InfoPeliculaViewModel(val repositorio: PeliculaRepositorio) : ViewModel() 
         this.pelicula = pelicula
         peliculasRelacionadas = emptyList()
         imagenesServicios = emptyList()
+
+        listasGuardadas.forEach {lista->
+            agregadaALista[lista.idInfoLista] = false
+        }
+
+    }
+
+    fun accionDeLista(idLista:Long, pelicula: MovieDb) {
+
+        println("Pelicula ${pelicula.id} en lista $idLista: ${agregadaALista[idLista]}")
+
+        if(agregadaALista[idLista] == true){
+            viewModelScope.launch(Dispatchers.IO) {
+                repositorioListas.borrarDeLista(idLista, pelicula)
+            }
+        }else{
+            viewModelScope.launch(Dispatchers.IO) {
+                repositorioListas.insertarEnLista(idLista, pelicula)
+            }
+        }
+
+        agregadaALista[idLista] = !(agregadaALista[idLista]?:false)
+
     }
 
 }
 
-class InfoPeliculaViewModelFactory(private val repositorio: PeliculaRepositorio): ViewModelProvider.Factory{
+class InfoPeliculaViewModelFactory(var repositorioListas: ListRepository, var repositorioPeliculas: PeliculaRepositorio): ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return InfoPeliculaViewModel(repositorio) as T
+        return InfoPeliculaViewModel(repositorioListas,repositorioPeliculas) as T
     }
 }

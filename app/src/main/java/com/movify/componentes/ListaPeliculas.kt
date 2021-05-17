@@ -5,7 +5,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -50,7 +53,7 @@ fun ListaPeliculas(
 }
 
 @Composable
-fun CaratulaPelicula(pelicula:MovieDb,cargarPelicula:(MovieDb)->Unit){
+fun CaratulaPelicula(pelicula:MovieDb,cargarPelicula:(MovieDb)->Unit,modifier:Modifier = Modifier){
     Image(
         painter = if (pelicula.posterPath.isNullOrBlank()) {
             painterResource(id = R.drawable.poster_placeholder_blue)
@@ -62,7 +65,7 @@ fun CaratulaPelicula(pelicula:MovieDb,cargarPelicula:(MovieDb)->Unit){
         },
         contentDescription = pelicula.title,
         contentScale = ContentScale.Crop,
-        modifier = Modifier
+        modifier = modifier
             .height(200.dp)
             .clickable { cargarPelicula(pelicula) }
     )

@@ -1,7 +1,6 @@
 package com.movify.vistas
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -16,7 +15,6 @@ import com.movify.database.InfoLista
 import com.movify.database.Pelicula
 import com.movify.ui.theme.MovifyTheme
 import com.movify.utils.convertirListaAMovieDb
-
 import info.movito.themoviedbapi.model.MovieDb
 
 @Composable
