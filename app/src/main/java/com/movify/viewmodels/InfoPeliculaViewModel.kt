@@ -29,6 +29,8 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
     var agregadaALista: HashMap<Long,Boolean> by mutableStateOf(HashMap())
         private set
 
+
+
     init{
         viewModelScope.launch(Dispatchers.IO) {
             val resultado = repositorioListas.getAlLists()?:listOf()
@@ -49,7 +51,11 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
 
             peliculaDatosNuevos?.let {
 
+                pelicula.backdropPath = peliculaDatosNuevos.backdropPath
+
                 pelicula.genres = peliculaDatosNuevos.genres
+
+                pelicula.overview = peliculaDatosNuevos.overview
 
                 //pelicula = peliculaDatosNuevos
 
@@ -79,6 +85,7 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
         if(agregadaALista[idLista] == true){
             viewModelScope.launch(Dispatchers.IO) {
                 repositorioListas.borrarDeLista(idLista, pelicula)
+
             }
         }else{
             viewModelScope.launch(Dispatchers.IO) {

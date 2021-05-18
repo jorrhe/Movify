@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -34,6 +35,10 @@ import info.movito.themoviedbapi.model.MovieDb
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.ParagraphStyle
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.style.TextOverflow
 
 val paddingLeft = 16.dp
 
@@ -90,66 +95,41 @@ fun InfoPelicula(
 fun HeaderCaratula(pelicula: MovieDb){
 
     Box {
-        if (pelicula.backdropPath.isNullOrBlank()) {
-
-            Text(
-                text = pelicula.title,
-                style = MaterialTheme.typography.h5,
-                color = Color.White,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(4.dp)
-                    .fillMaxWidth()
-
-            )
-
-        } else {
-
             val painter = rememberCoilPainter(
-                request = getUrlBackdrop(pelicula),
+                request = getUrlBackdrop(pelicula.backdropPath?:""),
                 fadeIn = true
             )
 
-
             Image(
                 painter = painter,
-                contentDescription = pelicula.title,
+                contentDescription = "pelicula.title",
                 modifier = Modifier
                     .aspectRatio(1.7f)
                     .fillMaxWidth(),
                 contentScale = ContentScale.Crop,
             )
 
-            if (painter.loadState.isFinalState()) {
-
-                Spacer(
-                    modifier = Modifier
-                        .background(
-                            Brush.verticalGradient(
-                                listOf(Color.Transparent, Color.Black),
-                                0f,
-                                200f
-                            )
+            Spacer(
+                modifier = Modifier
+                    .background(
+                        Brush.verticalGradient(
+                            listOf(Color.Transparent, Color.Black),
+                            0f,
+                            200f
                         )
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .align(Alignment.BottomCenter)
-                )
-
-
-                Text(
-                    text = pelicula.title,
-                    style = MaterialTheme.typography.h5,
-                    color = Color.White,
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .align(Alignment.BottomCenter)
-                )
-
-            }
-
-
-        }
+                    )
+                    .fillMaxWidth()
+                    .height(50.dp)
+                    .align(Alignment.BottomCenter)
+            )
+            Text(
+                text = pelicula.title,
+                style = MaterialTheme.typography.h5,
+                color = Color.White,
+                modifier = Modifier
+                    .padding(4.dp)
+                    .align(Alignment.BottomCenter)
+            )
     }
 
 }
@@ -161,20 +141,35 @@ fun DatosPelicula(
     agregadaALista:HashMap<Long,Boolean>,
     accionBotonLista:(Long,MovieDb)->Unit
 ){
+    var textoExpandido = rememberSaveable {mutableStateOf(false)}
 
     Column(
         Modifier.padding(paddingLeft,10.dp)
     ){
 
-        Text(
-            text = if (pelicula.overview.isNullOrBlank()) {
-                stringResource(id = R.string.description_not_found)
-            }
-            else {
-                pelicula.overview
-            },
-            textAlign = TextAlign.Justify,
+        ClickableText(
+            text = AnnotatedString(
+                if (pelicula.overview.isNullOrBlank()) {
+                    stringResource(id = R.string.description_not_found)
+                }
+                else {
+                    pelicula.overview
+                },
+
+                paragraphStyles= listOf(
+                    AnnotatedString.Range<ParagraphStyle>(ParagraphStyle(textAlign = TextAlign.Justify),0, pelicula.overview?.length?: 0)
+                ),
+                spanStyles = listOf(AnnotatedString.Range<SpanStyle>(SpanStyle(color = Color.White), 0, pelicula.overview?.length?:0))
+            )
+            ,
+            //textAlign = TextAlign.Justify,
             style = MaterialTheme.typography.body2,
+            maxLines = if (!textoExpandido.value) 6 else{ 20 },
+            overflow = TextOverflow.Ellipsis,
+            onClick = {
+                textoExpandido.value = !textoExpandido.value
+            }
+
         )
 
         Row(
@@ -183,7 +178,6 @@ fun DatosPelicula(
                 .fillMaxWidth()
                 .padding(0.dp, 10.dp)
         ){
-
 
             listasGuardadas.forEach {lista->
 

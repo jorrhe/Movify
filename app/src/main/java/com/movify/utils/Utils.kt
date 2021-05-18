@@ -11,8 +11,8 @@ fun getUrlCaratula(pelicula:MovieDb,ancho:String = "w300"):String{
     return "https://image.tmdb.org/t/p/$ancho/${pelicula.posterPath}"
 }
 
-fun getUrlBackdrop(pelicula:MovieDb,ancho:String = "w780"):String{
-    return "https://image.tmdb.org/t/p/$ancho/${pelicula.backdropPath}"
+fun getUrlBackdrop(rutaImagenFondo:String,ancho:String = "w780"):String{
+    return "https://image.tmdb.org/t/p/$ancho/$rutaImagenFondo"
 }
 
 fun procesarServicios(respuesta:String):List<String>{
