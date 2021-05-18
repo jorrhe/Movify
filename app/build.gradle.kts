@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.movify"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 30
         versionCode = 1
         versionName = "1.0"
@@ -100,6 +100,7 @@ dependencies {
     }
 
     implementation("com.google.accompanist:accompanist-coil:0.9.1")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.9.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.2")

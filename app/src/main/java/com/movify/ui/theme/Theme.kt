@@ -5,17 +5,20 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
         primary = Verde200,
         primaryVariant = Verde700,
-        secondary = Teal200
+        secondary = AzulMovify
 )
 
 private val LightColorPalette = lightColors(
-        primary = Verde500,
+        primary = VerdeMovify,
         primaryVariant = Verde700,
-        secondary = Teal200
+        secondary = AzulMovify,
+        onPrimary = Color(0XEE000000),
+        //surface = Color(0x33000000)
 
         /* Other default colors to override
     background = Color.White,
@@ -29,7 +32,7 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun MovifyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
-    val colors = if (true) {
+    val colors = if (darkTheme) {
         DarkColorPalette
     } else {
         LightColorPalette

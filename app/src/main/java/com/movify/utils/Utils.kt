@@ -1,6 +1,11 @@
 package com.movify.utils
 
+import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import com.movify.R
 import com.movify.database.Pelicula
 import info.movito.themoviedbapi.model.MovieDb
@@ -61,6 +66,19 @@ fun getIconoLista(id:Long): Int =
         2L -> R.drawable.ic_vistas
         else -> R.drawable.ic_ver_mas_tarde
     }
+
+fun esTemaOscuro(c: Context, temaSistema:Boolean):Boolean{
+    val sharedPreferences = c.getSharedPreferences("MOVIFY",MODE_PRIVATE)
+    return sharedPreferences.getBoolean("tema_oscuro", temaSistema)
+}
+
+fun cambiarTemaOscuro(c: Context,tema:Boolean){
+    val sharedPreferences = c.getSharedPreferences("MOVIFY",MODE_PRIVATE)
+    with (sharedPreferences.edit()) {
+        putBoolean("tema_oscuro", tema)
+        apply()
+    }
+}
 
 // Funciones de extension
 

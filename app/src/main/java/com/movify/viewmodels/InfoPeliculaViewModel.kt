@@ -49,9 +49,15 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
 
             peliculaDatosNuevos?.let {
 
-                pelicula.genres = peliculaDatosNuevos.genres
-
-                //pelicula = peliculaDatosNuevos
+                pelicula.apply {
+                    genres = peliculaDatosNuevos.genres
+                    backdropPath = peliculaDatosNuevos.backdropPath
+                    title = peliculaDatosNuevos.title
+                    overview = peliculaDatosNuevos.overview
+                    voteAverage = peliculaDatosNuevos.voteAverage
+                    releaseDate = peliculaDatosNuevos.releaseDate
+                    isAdult = peliculaDatosNuevos.isAdult
+                }
 
                 peliculasRelacionadas = peliculaDatosNuevos.similarMovies
 
@@ -63,15 +69,10 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
         }
     }
 
-    fun cambioPelicula(pelicula:MovieDb){
-        this.pelicula = pelicula
+    fun cambioPelicula(peliculaNueva:MovieDb){
+        this.pelicula = peliculaNueva
         peliculasRelacionadas = emptyList()
         imagenesServicios = emptyList()
-
-        listasGuardadas.forEach {lista->
-            agregadaALista[lista.idInfoLista] = false
-        }
-
     }
 
     fun accionDeLista(idLista:Long, pelicula: MovieDb) {

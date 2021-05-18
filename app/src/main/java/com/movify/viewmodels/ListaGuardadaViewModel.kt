@@ -41,6 +41,14 @@ class ListaGuardadaViewModel(var repositorioListas: ListRepository): ViewModel()
         }
     }
 
+    fun quitarPeliculaDeLista(idLista:Long,idPelicula:Int){
+
+        val listaMutada = listaPeliculas.toMutableList()
+        listaMutada.removeIf { it.idPelicula==idPelicula }
+
+        listaPeliculas = listaMutada.toList()
+    }
+
 }
 
 class ListaGuardadaViewModelFactory(var repositorioListas: ListRepository): ViewModelProvider.Factory{

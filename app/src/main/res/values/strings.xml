@@ -12,6 +12,10 @@
     <string name="componente_busqueda_label">Buscar Peliculas…</string>
     <string name="componente_streaming_label">Disponible en Streaming</string>
     <string name="componente_relacionadas_label">Peliculas Relacionadas</string>
+    <string name="componente_perfil_tus_listas">Tus Listas</string>
+    <string name="componente_perfil_ajustes">Ajustes</string>
+    <string name="componente_perfil_modo_claro">Activar Tema Claro</string>
+    <string name="componente_perfil_modo_oscuro">Activar Tema Oscuro</string>
     <!-- END COMPONENTES -->
 
     <!-- START ERRORES -->

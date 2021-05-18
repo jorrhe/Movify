@@ -6,11 +6,13 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
+import com.movify.ui.theme.AzulMovify
 import com.movify.vistas.Vista
 
 @Composable
@@ -27,8 +29,17 @@ fun BarraInferior(navController: NavController) {
         val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
         items.forEach { vista ->
             BottomNavigationItem(
-                icon = { Icon(vista.icono,vista.ruta) },
-                label = { Text(stringResource(vista.idEtiqueta)) },
+                icon = {
+                    Icon(
+                        imageVector=vista.icono,
+                        contentDescription = vista.ruta
+                    )
+                },
+                label = {
+                    Text(
+                        text = stringResource(vista.idEtiqueta)
+                    )
+                },
                 selected = currentRoute == vista.ruta,
                 onClick = {
                     navController.navigate(vista.ruta) {

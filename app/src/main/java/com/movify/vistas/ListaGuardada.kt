@@ -18,29 +18,15 @@ import com.movify.utils.convertirListaAMovieDb
 import info.movito.themoviedbapi.model.MovieDb
 
 @Composable
-fun ListaGuardada(infoLista:InfoLista, listaPeliculas: List<Pelicula>, cargarPelicula:(MovieDb)->Unit){
-    Column{
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ){
-            Text(infoLista.nombre, fontSize = 30.sp, modifier = Modifier.padding(12.dp))
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = null,
-                modifier=Modifier.size(30.dp)
-            )
-        }
+fun ListaGuardada(listaPeliculas: List<Pelicula>, cargarPelicula:(MovieDb)->Unit){
 
-        ListaPeliculas(peliculas = convertirListaAMovieDb(listaPeliculas), cargarPelicula = cargarPelicula)
-    }
+    ListaPeliculas(peliculas = convertirListaAMovieDb(listaPeliculas), cargarPelicula = cargarPelicula)
+
 }
 
 
 @Preview
 @Composable
 fun PreviewListaGuardada(){
-    MovifyTheme() {
-       // listaUsuario(id = 1, listName = "Ver más tarde", list = listOf())
-    }
+
 }

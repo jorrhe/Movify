@@ -1,9 +1,11 @@
 package com.movify
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
 import com.movify.repositorios.ListRepository
 import com.movify.repositorios.PeliculaRepositorio
 import com.movify.viewmodels.*
@@ -34,7 +36,13 @@ class MainActivity : ComponentActivity() {
         this.infoPeliculaViewModel = infoPeliculaViewModel
 
         setContent {
-            MovifyApp(inicioViewModel,infoPeliculaViewModel, searchViewModel, movieListsViewModel, listaGuardadaViewModel)
+            MovifyApp(
+                inicioPeliculaViewModel=inicioViewModel,
+                infoPeliculaViewModel = infoPeliculaViewModel,
+                searchViewModel = searchViewModel,
+                movieListsViewModel = movieListsViewModel,
+                listaGuardadaViewModel = listaGuardadaViewModel
+            )
         }
 
     }
