@@ -49,18 +49,11 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
 
             peliculaDatosNuevos?.let {
 
-                pelicula.apply {
-                    id = peliculaDatosNuevos.id
-                    genres = peliculaDatosNuevos.genres
-                    backdropPath = peliculaDatosNuevos.backdropPath
-                    title = peliculaDatosNuevos.title
-                    overview = peliculaDatosNuevos.overview
-                    voteAverage = peliculaDatosNuevos.voteAverage
-                    releaseDate = peliculaDatosNuevos.releaseDate
-                    isAdult = peliculaDatosNuevos.isAdult
-                }
-
-                println("PELICULA ACTUALIZADA: ${pelicula.title}, ${pelicula.voteAverage}")
+                pelicula.genres = peliculaDatosNuevos.genres
+                pelicula.backdropPath = peliculaDatosNuevos.backdropPath
+                pelicula.title = peliculaDatosNuevos.title
+                pelicula.overview = peliculaDatosNuevos.overview
+                pelicula.voteAverage = peliculaDatosNuevos.voteAverage
 
                 peliculasRelacionadas = if(peliculaDatosNuevos.similarMovies.isEmpty()){
                     listOf(peliculaDatosNuevos)
@@ -77,16 +70,7 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
     }
 
     fun cambioPelicula(peliculaNueva:MovieDb){
-        pelicula.apply {
-            id = peliculaNueva.id
-            genres = peliculaNueva.genres
-            backdropPath = peliculaNueva.backdropPath
-            title = peliculaNueva.title
-            overview = peliculaNueva.overview
-            voteAverage = peliculaNueva.voteAverage
-            releaseDate = peliculaNueva.releaseDate
-            isAdult = peliculaNueva.isAdult
-        }
+        pelicula = peliculaNueva
         peliculasRelacionadas = emptyList()
         imagenesServicios = emptyList()
     }

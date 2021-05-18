@@ -10,11 +10,14 @@ import com.movify.repositorios.PeliculaRepositorio
 import info.movito.themoviedbapi.model.MovieDb
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class InicioPeliculaViewModel(private val repositorio: PeliculaRepositorio) : ViewModel() {
 
     var peliculas:List<MovieDb> by mutableStateOf(listOf())
         private set
+
+    var error:Boolean by mutableStateOf(false)
 
     private var cargando = false
 
@@ -32,10 +35,19 @@ class InicioPeliculaViewModel(private val repositorio: PeliculaRepositorio) : Vi
         cargando = true
 
         viewModelScope.launch(Dispatchers.IO) {
-            val peliculasNuevas = repositorio.getUltimasPeliculas(pagina)
-            peliculas = peliculas + peliculasNuevas
-            pagina++
-            cargando = false
+            try{
+                val peliculasNuevas = repositorio.getUltimasPeliculas(pagina)
+                peliculas = peliculas + peliculasNuevas
+                pagina++
+                cargando = false
+                error = false
+            }catch (e:Exception){
+                cargando = false
+                println(e)
+                if(peliculas.isEmpty()){
+                    error = true
+                }
+            }
         }
     }
 

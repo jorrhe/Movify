@@ -2,6 +2,7 @@ package com.movify.vistas
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
+import com.movify.componentes.SinInternet
 import info.movito.themoviedbapi.model.MovieDb
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -9,11 +10,23 @@ import info.movito.themoviedbapi.model.MovieDb
 fun Inicio(
     peliculas:List<MovieDb>,
     cargarSiguientePagina:()->Unit,
-    cargarPelicula:(MovieDb)->Unit
+    cargarPelicula:(MovieDb)->Unit,
+
+    error:Boolean,
+    volverACargarPeliculas:()->Unit
 ) {
-    ListaPeliculas(
-        peliculas = peliculas,
-        cargarSiguientePagina = cargarSiguientePagina,
-        cargarPelicula = cargarPelicula
-    )
+
+    if(error){
+        SinInternet(
+            reintentar = volverACargarPeliculas
+        )
+    }else{
+        ListaPeliculas(
+            peliculas = peliculas,
+            cargarSiguientePagina = cargarSiguientePagina,
+            cargarPelicula = cargarPelicula
+        )
+    }
+
+
 }

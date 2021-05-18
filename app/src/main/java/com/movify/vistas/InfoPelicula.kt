@@ -80,7 +80,6 @@ fun InfoPelicula(
         )
 
         PeliculasRelacionadas(
-            pelicula = pelicula,
             peliculas = peliculasRelacionadas,
             cargarPelicula = cargarPelicula
         )
@@ -262,7 +261,6 @@ fun ServiciosStreaming(
 
 @Composable
 fun PeliculasRelacionadas(
-    pelicula:MovieDb,
     peliculas:List<MovieDb>?,
     cargarPelicula:(MovieDb)->Unit
 ){
@@ -297,8 +295,6 @@ fun PeliculasRelacionadas(
 /*ELEMENTOS SIMPLES*/
 @Composable
 fun Etiqueta(texto:String,gradiente:Brush,colorTexto:Color = NegroTransparente){
-
-
 
     Text(
         text = texto,

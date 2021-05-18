@@ -20,16 +20,23 @@ class PeliculaRepositorio {
     }
 
     fun getPelicula(id:Int):MovieDb?{
-        val pelicula = apiClient.movies.getMovie(
-            id,
-            "es-ES",
-            TmdbMovies.MovieMethod.recommendations,
-            TmdbMovies.MovieMethod.similar,
-            TmdbMovies.MovieMethod.now_playing,
-            TmdbMovies.MovieMethod.credits,
-            TmdbMovies.MovieMethod.upcoming
-        )
-        return pelicula
+
+        try{
+            return apiClient.movies.getMovie(
+                id,
+                "es-ES",
+                TmdbMovies.MovieMethod.recommendations,
+                TmdbMovies.MovieMethod.similar,
+                TmdbMovies.MovieMethod.now_playing,
+                TmdbMovies.MovieMethod.credits,
+                TmdbMovies.MovieMethod.upcoming
+            )
+        }catch (e:Exception){
+            println("Excepcioón al buscar")
+            println(e)
+        }
+
+        return null
     }
 
     fun getServicios(id:Int) : List<String>{
@@ -55,13 +62,15 @@ class PeliculaRepositorio {
     }
 
     fun getSearch(query: String): List<MovieDb> {
-        val foundMovies = apiClient.search.searchMovie(query, 0, "es-ES", true, 0)
 
-        return foundMovies.results
+        try{
+            return apiClient.search.searchMovie(query, 0, "es-ES", true, 0).results
+        }catch (e:Exception){
+            println("Excepcioón al buscar")
+            println(e)
+        }
+
+        return emptyList()
     }
 
-    fun getMovieById(id:Int):MovieDb{
-        val foundMovie = apiClient.movies.getMovie(id, "es-ES")
-        return foundMovie
-    }
 }

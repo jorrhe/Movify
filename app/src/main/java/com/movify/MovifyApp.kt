@@ -153,7 +153,12 @@ fun NavHostMovify(
                 cargarSiguientePagina = {
                     inicioPeliculaViewModel.siguientePagina()
                 },
-                cargarPelicula = cargarPelicula
+                cargarPelicula = cargarPelicula,
+
+                volverACargarPeliculas = {
+                    inicioPeliculaViewModel.siguientePagina()
+                },
+                error = inicioPeliculaViewModel.error
             )
 
         }
