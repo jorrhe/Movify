@@ -80,6 +80,7 @@ fun InfoPelicula(
         )
 
         PeliculasRelacionadas(
+            pelicula = pelicula,
             peliculas = peliculasRelacionadas,
             cargarPelicula = cargarPelicula
         )
@@ -261,11 +262,12 @@ fun ServiciosStreaming(
 
 @Composable
 fun PeliculasRelacionadas(
+    pelicula:MovieDb,
     peliculas:List<MovieDb>?,
     cargarPelicula:(MovieDb)->Unit
 ){
 
-    if(peliculas!=null && peliculas.isNotEmpty()){
+    if(peliculas!=null){
 
         Text(
             text = stringResource(R.string.componente_relacionadas_label),
@@ -278,7 +280,11 @@ fun PeliculasRelacionadas(
             items(items = peliculas){pelicula->
                 CaratulaPelicula(
                     pelicula = pelicula,
-                    cargarPelicula = cargarPelicula,
+                    cargarPelicula = {peliculaACargar->
+                        if(pelicula.id!=peliculaACargar.id){
+                            cargarPelicula(peliculaACargar)
+                        }
+                    },
                     modifier = Modifier
                         .width(138.dp)
                 )

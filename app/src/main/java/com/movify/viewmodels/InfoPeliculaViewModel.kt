@@ -36,20 +36,21 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
         }
     }
 
-    fun getPelicula(id:Int){
+    fun getPelicula(idPelicula:Int){
 
         viewModelScope.launch(Dispatchers.IO) {
 
             listasGuardadas.forEach {lista->
                 val idLista = lista.idInfoLista
-                agregadaALista[idLista] = repositorioListas.estaPeliculaEnLista(idLista,pelicula.id)
+                agregadaALista[idLista] = repositorioListas.estaPeliculaEnLista(idLista,idPelicula)
             }
 
-            val peliculaDatosNuevos = repositorioPeliculas.getPelicula(id)
+            val peliculaDatosNuevos = repositorioPeliculas.getPelicula(idPelicula)
 
             peliculaDatosNuevos?.let {
 
                 pelicula.apply {
+                    id = peliculaDatosNuevos.id
                     genres = peliculaDatosNuevos.genres
                     backdropPath = peliculaDatosNuevos.backdropPath
                     title = peliculaDatosNuevos.title
@@ -59,9 +60,15 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
                     isAdult = peliculaDatosNuevos.isAdult
                 }
 
-                peliculasRelacionadas = peliculaDatosNuevos.similarMovies
+                println("PELICULA ACTUALIZADA: ${pelicula.title}, ${pelicula.voteAverage}")
 
-                imagenesServicios = repositorioPeliculas.getServicios(id)
+                peliculasRelacionadas = if(peliculaDatosNuevos.similarMovies.isEmpty()){
+                    listOf(peliculaDatosNuevos)
+                }else{
+                    peliculaDatosNuevos.similarMovies
+                }
+
+                imagenesServicios = repositorioPeliculas.getServicios(idPelicula)
 
 
             }
@@ -70,7 +77,16 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
     }
 
     fun cambioPelicula(peliculaNueva:MovieDb){
-        this.pelicula = peliculaNueva
+        pelicula.apply {
+            id = peliculaNueva.id
+            genres = peliculaNueva.genres
+            backdropPath = peliculaNueva.backdropPath
+            title = peliculaNueva.title
+            overview = peliculaNueva.overview
+            voteAverage = peliculaNueva.voteAverage
+            releaseDate = peliculaNueva.releaseDate
+            isAdult = peliculaNueva.isAdult
+        }
         peliculasRelacionadas = emptyList()
         imagenesServicios = emptyList()
     }
