@@ -10,11 +10,15 @@ class ListRepository(application: Application) {
     private val movieListDao: MovieListDao? = MovieRoomDatabase.getDatabase(application)?.movieDao()
 
     suspend fun getAlLists():List<InfoLista>?{
-            return movieListDao?.getAllLists()
+        return movieListDao?.getAllLists()
     }
 
-    suspend fun getListById(id:Int): InfoListaConPelis? {
+    suspend fun getListById(id:Int): InfoLista? {
         return movieListDao?.getListById(id)
+    }
+
+    suspend fun getPeliculasByListId(id:Int): List<Pelicula>? {
+        return movieListDao?.getPeliculasByListId(id)
     }
 
     suspend fun estaPeliculaEnLista(idInfoLista : Long, idPelicula:Int): Boolean {

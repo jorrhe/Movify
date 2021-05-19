@@ -32,12 +32,16 @@ class ListaGuardadaViewModel(var repositorioListas: ListRepository): ViewModel()
     fun loadList(id:Int){
         viewModelScope.launch(Dispatchers.IO){
 
-            val infoListaConPelis = repositorioListas.getListById(id)
+            val infoListaLeida = repositorioListas.getListById(id)
+            val peliculas = repositorioListas.getPeliculasByListId(id)
 
-            if (infoListaConPelis != null) {
-                infoLista = infoListaConPelis.infoLista
-                listaPeliculas = infoListaConPelis.listaPeliculas
+            if (infoListaLeida != null && peliculas!=null) {
+                infoLista = infoListaLeida
+                listaPeliculas = peliculas
             }
+            println("LEIDOOO")
+            println(infoLista)
+            println(listaPeliculas)
         }
     }
 

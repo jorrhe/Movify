@@ -11,7 +11,11 @@ interface MovieListDao {
 
     @Transaction
     @Query("SELECT * FROM InfoLista WHERE idInfoLista = :listId")
-    suspend fun getListById(listId: Int): InfoListaConPelis
+    suspend fun getListById(listId: Int): InfoLista
+
+    @Transaction
+    @Query("SELECT p.* FROM PeliRefLista r INNER JOIN Pelicula p ON p.idPelicula = r.idPelicula WHERE r.idInfoLista = :listId ORDER BY r.fecha DESC")
+    suspend fun getPeliculasByListId(listId: Int): List<Pelicula>
     
     @Delete
     suspend fun removeMovieFromList(peliRefLista: PeliRefLista)
