@@ -3,6 +3,7 @@ package com.movify.repositorios
 import android.app.Application
 import com.movify.database.*
 import info.movito.themoviedbapi.model.MovieDb
+import java.util.*
 
 class ListRepository(application: Application) {
 
@@ -24,11 +25,11 @@ class ListRepository(application: Application) {
     suspend fun insertarEnLista(id:Long, peliculaApi: MovieDb){
         val pelicula = movieDbAPelicula(peliculaApi)
         movieListDao?.insertAll(pelicula)
-        movieListDao?.addMovieToList(PeliRefLista(id, pelicula.idPelicula))
+        movieListDao?.addMovieToList(PeliRefLista(id, pelicula.idPelicula, Date()))
     }
 
     suspend fun borrarDeLista(id:Long, pelicula: MovieDb){
-        movieListDao?.removeMovieFromList(PeliRefLista(id, pelicula.id))
+        movieListDao?.removeMovieFromList(PeliRefLista(id, pelicula.id, Date()))
     }
 
 }

@@ -9,7 +9,9 @@ data class Pelicula(
     @PrimaryKey
     var idPelicula: Int,
     val nombre:String,
-    val caratula : String
+    val caratula : String,
+    val informacion:String?,
+    val fondo:String?
 ) {
 
     fun AMovieDb(): MovieDb {
@@ -17,10 +19,12 @@ data class Pelicula(
         movieDb.id = idPelicula
         movieDb.title = nombre
         movieDb.posterPath = caratula
+        movieDb.backdropPath = fondo
+        movieDb.overview = informacion
         return movieDb
     }
 }
 
 fun movieDbAPelicula(movieDb: MovieDb): Pelicula{
-    return Pelicula(movieDb.id,movieDb.title,movieDb.posterPath)
+    return Pelicula(movieDb.id,movieDb.title,movieDb.posterPath, movieDb.overview, movieDb.backdropPath)
 }

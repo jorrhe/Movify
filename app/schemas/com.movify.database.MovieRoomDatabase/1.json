@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5f219ce385075e060497228c6f534867",
+    "identityHash": "a67c484de0020570d0f9513101e42596",
     "entities": [
       {
         "tableName": "Pelicula",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idPelicula` INTEGER NOT NULL, `nombre` TEXT NOT NULL, `caratula` TEXT NOT NULL, PRIMARY KEY(`idPelicula`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idPelicula` INTEGER NOT NULL, `nombre` TEXT NOT NULL, `caratula` TEXT NOT NULL, `informacion` TEXT, `fondo` TEXT, PRIMARY KEY(`idPelicula`))",
         "fields": [
           {
             "fieldPath": "idPelicula",
@@ -25,6 +25,18 @@
             "columnName": "caratula",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "informacion",
+            "columnName": "informacion",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fondo",
+            "columnName": "fondo",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -70,7 +82,7 @@
       },
       {
         "tableName": "PeliRefLista",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idInfoLista` INTEGER NOT NULL, `idPelicula` INTEGER NOT NULL, PRIMARY KEY(`idInfoLista`, `idPelicula`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idInfoLista` INTEGER NOT NULL, `idPelicula` INTEGER NOT NULL, `fecha` INTEGER NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(`idInfoLista`, `idPelicula`))",
         "fields": [
           {
             "fieldPath": "idInfoLista",
@@ -83,6 +95,13 @@
             "columnName": "idPelicula",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "fecha",
+            "columnName": "fecha",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "CURRENT_TIMESTAMP"
           }
         ],
         "primaryKey": {
@@ -99,7 +118,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5f219ce385075e060497228c6f534867')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a67c484de0020570d0f9513101e42596')"
     ]
   }
 }

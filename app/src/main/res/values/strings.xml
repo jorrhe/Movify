@@ -24,4 +24,5 @@
 
     <string name="description_not_found">No existe una descripción para este título</string>
     <string name="lista">Lista</string>
+    <string name="componenete_lista_guardada_vacia">Parece que no hay nada...</string>
 </resources>
