@@ -118,8 +118,10 @@ fun HeaderCaratula(pelicula: MovieDb){
                 painter = painter,
                 contentDescription = pelicula.title,
                 modifier = Modifier
+                    .heightIn(20.dp,250.dp)
                     .aspectRatio(1.7f)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .align(Alignment.Center),
                 contentScale = ContentScale.Crop,
             )
 
@@ -144,6 +146,7 @@ fun HeaderCaratula(pelicula: MovieDb){
                     text = pelicula.title,
                     style = MaterialTheme.typography.h5,
                     color = Color.White,
+                    textAlign = TextAlign.Center,
                     modifier = Modifier
                         .padding(4.dp)
                         .align(Alignment.BottomCenter)
