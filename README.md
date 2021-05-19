@@ -19,4 +19,14 @@ Si quieres instalarte el proyecto en tu ordenador es necesario una versión de A
 
 ``claveTmdb="<CLAVE_API>"``
 
-Sustituyendo ``<CLAVE_API>`` por una clave API válida que se te proporciona al registrarte en The Movie Database. [(Más información)](https://developers.themoviedb.org/3/getting-started/authentication)
+_Nota: Donde pone ``<CLAVE_API>`` tienes que sustituirlo por una clave API válida, que se te proporciona al registrarte en The Movie Database. [(Más información)](https://developers.themoviedb.org/3/getting-started/authentication)_
+
+## Créditos
+
+Desarrollado por:
+
+[@beybo](https://github.com/beybo)
+
+[@FJavierLoz](https://github.com/FJavierLoz)
+
+[@Berklan](https://github.com/Berklan)
