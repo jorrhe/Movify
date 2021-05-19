@@ -64,7 +64,7 @@ class PeliculaRepositorio {
     fun getSearch(query: String): List<MovieDb> {
 
         try{
-            return apiClient.search.searchMovie(query, 0, "es-ES", true, 0).results
+            return apiClient.search.searchMovie(query, 0, "es-ES", false, 0).results
         }catch (e:Exception){
             println("Excepcioón al buscar")
             println(e)

@@ -4,6 +4,7 @@ import android.app.Application
 import com.movify.database.*
 import info.movito.themoviedbapi.model.MovieDb
 import java.util.*
+import androidx.annotation.NonNull
 
 class ListRepository(application: Application) {
 

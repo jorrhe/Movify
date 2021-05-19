@@ -12,6 +12,7 @@ import com.movify.repositorios.PeliculaRepositorio
 import info.movito.themoviedbapi.model.MovieDb
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import androidx.annotation.NonNull
 
 class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositorioPeliculas: PeliculaRepositorio) : ViewModel() {
 
