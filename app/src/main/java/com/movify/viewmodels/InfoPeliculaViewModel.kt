@@ -26,7 +26,7 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
     var listasGuardadas: List<InfoLista> by mutableStateOf(listOf())
         private set
 
-    var agregadaALista: HashMap<Long,Boolean> by mutableStateOf(HashMap())
+    var agregadaALista: AgregadaALista by mutableStateOf(AgregadaALista())
         private set
 
     init{
@@ -42,7 +42,8 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
 
             listasGuardadas.forEach {lista->
                 val idLista = lista.idInfoLista
-                agregadaALista[idLista] = repositorioListas.estaPeliculaEnLista(idLista,idPelicula)
+                val agregada = repositorioListas.estaPeliculaEnLista(idLista,idPelicula)
+                agregadaALista.setValor(idLista,agregada)
             }
 
             val peliculaDatosNuevos = repositorioPeliculas.getPelicula(idPelicula)
@@ -73,11 +74,24 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
         pelicula = peliculaNueva
         peliculasRelacionadas = emptyList()
         imagenesServicios = emptyList()
+        agregadaALista = AgregadaALista()
+
+        viewModelScope.launch(Dispatchers.IO) {
+
+            listasGuardadas.forEach { lista ->
+                val idLista = lista.idInfoLista
+                val agregada = repositorioListas.estaPeliculaEnLista(idLista, pelicula.id)
+                agregadaALista.setValor(idLista, agregada)
+            }
+        }
+
     }
 
     fun accionDeLista(idLista:Long, pelicula: MovieDb) {
 
-        if(agregadaALista[idLista] == true){
+        val agregada = agregadaALista.getValor(idLista)
+
+        if(agregada){
             viewModelScope.launch(Dispatchers.IO) {
                 repositorioListas.borrarDeLista(idLista, pelicula)
             }
@@ -87,7 +101,7 @@ class InfoPeliculaViewModel(var repositorioListas: ListRepository, var repositor
             }
         }
 
-        agregadaALista[idLista] = !(agregadaALista[idLista]?:false)
+        agregadaALista.setValor(idLista,!agregada)
 
     }
 
@@ -97,4 +111,23 @@ class InfoPeliculaViewModelFactory(var repositorioListas: ListRepository, var re
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return InfoPeliculaViewModel(repositorioListas,repositorioPeliculas) as T
     }
+}
+
+data class AgregadaALista(var favoritos:Boolean = false, var vistas:Boolean = false, var masTarde:Boolean = false){
+
+    fun setValor(idLista: Long,valor:Boolean){
+        when(idLista){
+            1L->favoritos = valor
+            2L->vistas = valor
+            else -> masTarde = valor
+        }
+    }
+
+    fun getValor(idLista: Long):Boolean = when(idLista){
+            1L->favoritos
+            2L->vistas
+            else -> masTarde
+        }
+
+
 }

@@ -25,7 +25,6 @@ import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.imageloading.isFinalState
 import com.movify.R
 import com.movify.database.InfoLista
-import com.movify.ui.theme.Verde200
 import com.movify.utils.getIconoLista
 import com.movify.utils.getUrlBackdrop
 import info.movito.themoviedbapi.model.MovieDb
@@ -39,6 +38,7 @@ import com.movify.componentes.SimpleFlowRow
 import com.movify.ui.theme.AzulMovify
 import com.movify.ui.theme.NegroTransparente
 import com.movify.ui.theme.VerdeMovify
+import com.movify.viewmodels.AgregadaALista
 import info.movito.themoviedbapi.model.Genre
 
 val paddingLeft = 16.dp
@@ -48,7 +48,7 @@ fun InfoPelicula(
     pelicula: MovieDb,
 
     listasGuardadas:List<InfoLista>,
-    agregadaALista:HashMap<Long,Boolean>,
+    agregadaALista:AgregadaALista,
     accionBotonLista:(Long, MovieDb)->Unit,
     borrarDeLista:(Long)->Unit,
 
@@ -118,7 +118,7 @@ fun HeaderCaratula(pelicula: MovieDb){
                 painter = painter,
                 contentDescription = pelicula.title,
                 modifier = Modifier
-                    .heightIn(20.dp,250.dp)
+                    .heightIn(20.dp, 250.dp)
                     .aspectRatio(1.7f)
                     .fillMaxWidth()
                     .align(Alignment.Center),
@@ -164,7 +164,7 @@ fun HeaderCaratula(pelicula: MovieDb){
 fun DatosPelicula(
     pelicula: MovieDb,
     listasGuardadas:List<InfoLista>,
-    agregadaALista:HashMap<Long,Boolean>,
+    agregadaALista:AgregadaALista,
     accionBotonLista:(Long,MovieDb)->Unit,
     borrarDeLista:(Long)->Unit
 ){
@@ -317,7 +317,7 @@ fun Etiqueta(texto:String,gradiente:Brush,colorTexto:Color = NegroTransparente){
 fun Acciones(
     pelicula: MovieDb,
     listasGuardadas:List<InfoLista>,
-    agregadaALista:HashMap<Long,Boolean>,
+    agregadaALista:AgregadaALista,
     accionBotonLista:(Long,MovieDb)->Unit,
     borrarDeLista:(Long)->Unit
 ){
@@ -331,7 +331,7 @@ fun Acciones(
 
         listasGuardadas.forEach {lista->
 
-            var colorear:Boolean by rememberSaveable { mutableStateOf(agregadaALista[lista.idInfoLista]?:false) }
+            var colorear by remember { mutableStateOf(agregadaALista.getValor(lista.idInfoLista)) }
 
             var color = if(colorear){
                 if(MaterialTheme.colors.isLight) AzulMovify else VerdeMovify
@@ -341,12 +341,14 @@ fun Acciones(
 
             IconButton(
                 onClick = {
-                    colorear = !colorear
+
                     accionBotonLista(lista.idInfoLista,pelicula)
 
-                    if(!colorear){
+                    if(!agregadaALista.getValor(lista.idInfoLista)){
                         borrarDeLista(lista.idInfoLista)
                     }
+
+                    colorear = !colorear
 
                 },
                 modifier = Modifier.weight(1f)
