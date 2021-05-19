@@ -40,6 +40,9 @@ android {
         getByName("debug") {
             buildConfigField("String", "claveTmdb", claveTmdb)
         }
+        getByName("release") {
+            buildConfigField("String", "claveTmdb", claveTmdb)
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

@@ -81,7 +81,8 @@ fun InfoPelicula(
 
         PeliculasRelacionadas(
             peliculas = peliculasRelacionadas,
-            cargarPelicula = cargarPelicula
+            cargarPelicula = cargarPelicula,
+            pelicula = pelicula
         )
 
 
@@ -264,6 +265,7 @@ fun ServiciosStreaming(
 
 @Composable
 fun PeliculasRelacionadas(
+    pelicula: MovieDb,
     peliculas:List<MovieDb>?,
     cargarPelicula:(MovieDb)->Unit
 ){
@@ -278,9 +280,9 @@ fun PeliculasRelacionadas(
         )
 
         LazyRow() {
-            items(items = peliculas){pelicula->
+            items(items = peliculas){peliculaActual->
                 CaratulaPelicula(
-                    pelicula = pelicula,
+                    pelicula = peliculaActual,
                     cargarPelicula = {peliculaACargar->
                         if(pelicula.id!=peliculaACargar.id){
                             cargarPelicula(peliculaACargar)
