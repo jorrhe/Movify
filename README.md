@@ -2,7 +2,7 @@
   <img src="app/src/main/res/drawable/movify_title_1.jpg" width="400"/>
 </p>
 
-Movify es una aplicación para Android desarrollada usando Compose. Te permite buscar peliculas y clasificarlas en 3 listas:
+Movify es una aplicación para Android desarrollada usando Compose. Te permite buscar peliculas y ver en que servicio de streaming se encuentran. Además puedes clasificar las películas en 3 listas:
 - Favoritos
 - Vistas
 - Ver más tarde.
