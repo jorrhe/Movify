@@ -19,7 +19,7 @@ class SearchViewModel(private val repository: PeliculaRepositorio) : ViewModel()
     fun getMovies(query: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val foundList = repository.getSearch(query)
-            foundMovies = foundList
+            foundMovies = foundList.filter { !it.posterPath.isNullOrEmpty() }
         }
     }
 

@@ -9,9 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
-import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.navigate
 import com.movify.ui.theme.AzulMovify
 import com.movify.vistas.Vista
 
@@ -26,7 +24,7 @@ fun BarraInferior(navController: NavController) {
 
     BottomNavigation {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
+        val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { vista ->
             BottomNavigationItem(
                 icon = {
@@ -46,7 +44,7 @@ fun BarraInferior(navController: NavController) {
                         // Pop up to the start destination of the graph to
                         // avoid building up a large stack of destinations
                         // on the back stack as users select items
-                        popUpTo = navController.graph.startDestination
+                        popUpTo(navController.graph.startDestinationId)
                         // Avoid multiple copies of the same destination when
                         // reselecting the same item
                         launchSingleTop = true
