@@ -26,5 +26,5 @@ data class Pelicula(
 }
 
 fun movieDbAPelicula(movieDb: MovieDb): Pelicula{
-    return Pelicula(movieDb.id,movieDb.title,movieDb.posterPath, movieDb.overview, movieDb.backdropPath)
+    return Pelicula(movieDb.id,movieDb.title,movieDb.posterPath?:"", movieDb.overview?:"", movieDb.backdropPath?:"")
 }

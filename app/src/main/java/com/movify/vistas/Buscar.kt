@@ -37,28 +37,25 @@ fun Buscar(
 
     val label = stringResource(R.string.componente_busqueda_label)
 
-    Column(Modifier.padding(10.dp)){
-        Row {
-            SearchBar(
-                valor = valor,
-                label = label,
-                clickDone = { view.clearFocus() },
-                buscar = { query->
-                    valor = query
-                    if (query.isBlank()) {
-                        cleanSearch()
-                    }
-                    else {
-                        searchMovies(query)
-                    }
-                },
-                cleanSearch = {
-                    valor = ""
-                    view.clearFocus()
-                    cleanSearch()
-                }
-            )
-        }
+    Column{
+
+        SearchBar(
+            valor = valor,
+            label = label,
+            clickDone = { view.clearFocus() },
+            buscar = { query->
+                valor = query
+
+                searchMovies(query)
+
+            },
+            cleanSearch = {
+                valor = ""
+                view.clearFocus()
+                cleanSearch()
+            }
+        )
+
 
         ListaPeliculas(peliculas = foundMovies, cargarSiguientePagina = {}, cargarPelicula = loadMovie)
     }
@@ -68,7 +65,8 @@ fun Buscar(
 fun SearchBar(valor: String, label: String, clickDone: ()->Unit, buscar: (String)->Unit, cleanSearch: ()->Unit){
     OutlinedTextField(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(10.dp),
         value = valor,
         onValueChange = {
             if (it.isBlank()) {

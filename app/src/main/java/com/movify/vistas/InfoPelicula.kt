@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import com.movify.componentes.SimpleFlowRow
 import com.movify.ui.theme.AzulMovify
+import com.movify.ui.theme.GradienteMovify
 import com.movify.ui.theme.NegroTransparente
 import com.movify.ui.theme.VerdeMovify
 import com.movify.viewmodels.AgregadaALista
@@ -99,7 +100,6 @@ fun HeaderCaratula(pelicula: MovieDb){
             Text(
                 text = pelicula.title,
                 style = MaterialTheme.typography.h5,
-                color = Color.White,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(4.dp)
@@ -185,12 +185,10 @@ fun DatosPelicula(
                     .padding(bottom = 10.dp),
             ) {
 
-                val gradiente = remember { Brush.horizontalGradient(listOf(Color(0xFF28D8A3), Color(0xFF00BEB2))) }
-
                 pelicula.genres.forEach { genero->
                     Etiqueta(
                         texto = genero.name,
-                        gradiente = gradiente
+                        gradiente = GradienteMovify
                     )
                 }
             }
