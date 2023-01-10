@@ -11,7 +11,7 @@ Usa la API de https://www.themoviedb.org/
 
 ## Instalación
 
-Para instalar la versión más reciente de Movify descárgate la APK haciendo [click aquí](https://github.com/beybo/Movify/releases/latest/download/Movify.apk).
+Para instalar la versión más reciente de Movify descárgate la APK haciendo [click aquí](https://github.com/jorrhe/Movify/releases/latest/download/Movify.apk).
 
 ## Compilación
 
