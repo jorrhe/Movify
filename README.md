@@ -27,7 +27,7 @@ _Nota: Donde pone ``<CLAVE_API>`` tienes que sustituirlo por una clave API váli
 
 Desarrollado por:
 
-[@beybo](https://github.com/beybo)
+[@jorrhe](https://github.com/jorrhe)
 
 [@FJavierLoz](https://github.com/FJavierLoz)
 
